@@ -3,11 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                    <div class="text-center m-5">
+                        <img src="{{ asset('dist/img/logo-sm.svg') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8" width="150" height="150">
+                    </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 

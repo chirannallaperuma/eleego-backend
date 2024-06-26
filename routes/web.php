@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Backend\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +25,17 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Admin routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [\App\Http\Controllers\Backend\AdminController::class, 'index'])->name('admin.dashboard');
+
+    // vehicles routes
+    Route::group(['prefix' => 'vehicles'], function () {
+        Route::get('/', [\App\Http\Controllers\Backend\VehicleController::class, 'index'])->name('vehicles.index');
+        Route::get('/add', [\App\Http\Controllers\Backend\VehicleController::class, 'create'])->name('vehicles.create');
+        Route::post('/store', [\App\Http\Controllers\Backend\VehicleController::class, 'store'])->name('vehicles.store');
+        Route::post('/update', [\App\Http\Controllers\Backend\VehicleController::class, 'update'])->name('vehicles.update');
+    });
+
+    Route::group(['prefix' => 'vehicle-brands'], function () {
+        Route::post('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'store'])->name('vehicle-brand.store');
+        Route::get('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'index'])->name('vehicle-brand.index');
+    });
 });

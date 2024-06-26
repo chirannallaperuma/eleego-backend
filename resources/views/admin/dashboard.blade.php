@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Dashboard')
+@section('title', 'eleego')
 
 @section('content')
     <div class="content">

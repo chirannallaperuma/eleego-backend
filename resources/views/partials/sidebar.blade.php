@@ -85,7 +85,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/vehicles/add" class="nav-link">
+                                <a href="/limousine-bookings" class="nav-link">
                                     <i class="fa fa-file-alt nav-icon"></i>
                                     <p>Limousine</p>
                                 </a>

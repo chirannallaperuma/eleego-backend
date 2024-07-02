@@ -34,8 +34,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update', [\App\Http\Controllers\Backend\VehicleController::class, 'update'])->name('vehicles.update');
     });
 
+    // vehicle brands routes
     Route::group(['prefix' => 'vehicle-brands'], function () {
         Route::post('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'store'])->name('vehicle-brand.store');
         Route::get('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'index'])->name('vehicle-brand.index');
+    });
+
+    // bookings routes
+    Route::group(['prefix' => 'limousine-bookings'], function () {
+        Route::get('/', [\App\Http\Controllers\Backend\LimousineBookingController::class, 'index'])->name('limousine-bookings.index');
     });
 });

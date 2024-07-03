@@ -1,14 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\ApiHelper;
 use App\Repositories\Contracts\VehicleBrandRepositoryInterface;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class VehicleController extends Controller
 {
+    use ApiHelper;
+
     protected $vehicleRepository;
 
     protected $vehicleBrandRepository;
@@ -16,8 +22,7 @@ class VehicleController extends Controller
     public function __construct(
         VehicleRepositoryInterface $vehicleRepository,
         VehicleBrandRepositoryInterface $vehicleBrandRepository
-        )
-    {
+    ) {
         $this->vehicleRepository = $vehicleRepository;
         $this->vehicleBrandRepository = $vehicleBrandRepository;
     }
@@ -71,7 +76,7 @@ class VehicleController extends Controller
 
         return redirect()->back()->with('alert', 'Vehicle created successfully!');
     }
-    
+
     /**
      * update
      *
@@ -81,7 +86,7 @@ class VehicleController extends Controller
     public function update(Request $request)
     {
         $data = $request->all();
-    
+
         $vehicle = $this->vehicleRepository->find($request->id);
 
         $vehicle->update($data);
@@ -91,14 +96,38 @@ class VehicleController extends Controller
             $fileExtension = $image->getClientOriginalExtension();
             $fileName = $request->name . '.' . $fileExtension;
 
-            $imagePath = 'uploads/vehicles';
-            $image->move($imagePath, $fileName);
+            $diskName = 'public';
+            $disk = Storage::disk($diskName);
+
+            $path = $request->file('image')->store('uploads/vehicles/' . $fileName, $diskName);
+            $url = $disk->url($path);
 
             $vehicle->update([
-                'image' => $fileName
+                'image_path' => $path,
+                'image_url' => $url,
+                'image_disk' => $diskName,
             ]);
         }
 
         return redirect()->back()->with('alert', 'Vehicle updated successfully!');
+    }
+
+    /**
+     * getVehiclesByType
+     *
+     * @param  mixed $type
+     * @return void
+     */
+    public function getVehiclesByType($type)
+    {
+        try {
+            $vehicles = $this->vehicleRepository->getVehiclesByType($type);
+
+            return $this->apiSuccess($vehicles);
+        } catch (Throwable $th) {
+            Log::error("VehicleController (getVehiclesByType) : error fetching vehicles' | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
+
+            return $this->apiError("something went wrong");
+        }
     }
 }

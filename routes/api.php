@@ -19,5 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1'], function () {
-    Route::post('/limousine-booking', [\App\Http\Controllers\Frontend\LimousineBookingController::class, 'confirmBooking']);
+
+    // limousine booking routes
+    Route::post('/limousine-booking', [\App\Http\Controllers\LimousineBookingController::class, 'confirmBooking']);
+
+    // vehicles routes
+    Route::get('/vehicles/{type}', [\App\Http\Controllers\VehicleController::class, 'getVehiclesByType']);
 });

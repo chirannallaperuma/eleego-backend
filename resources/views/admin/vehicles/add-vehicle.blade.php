@@ -352,7 +352,7 @@
                         w = this.width;
                         h = this.height;
                         s = input.files[0].size;
-                        if (s >= 500000 || h > w) {
+                        if (s >= 1000000 || h > w) {
                             console.log("a")
                             setTimeout(function() {
                                 sweetAlert("Oops...",

@@ -22,6 +22,8 @@ class VehicleModel extends Model
         'image'
     ];
 
+    protected $dates = ['deleted_at'];
+
     public function brands()
     {
         return $this->hasOne(VehicleBrandModel::class, 'brand_name', 'brand_name');

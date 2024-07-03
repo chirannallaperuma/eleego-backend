@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiHelper;
 use App\Repositories\Contracts\VehicleBrandRepositoryInterface;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -59,22 +60,26 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('image');
+        try {
+            $data = $request->except('image');
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $fileExtension = $image->getClientOriginalExtension();
-            $fileName = $request->name . '.' . $fileExtension;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $fileExtension = $image->getClientOriginalExtension();
+                $fileName = $request->name . '.' . $fileExtension;
 
-            $data['image'] = $fileName;
+                $data['image'] = $fileName;
 
-            $imagePath = 'uploads/vehicles';
-            $image->move($imagePath, $fileName);
+                $imagePath = 'uploads/vehicles';
+                $image->move($imagePath, $fileName);
+            }
+
+            $this->vehicleRepository->create($data);
+
+            return redirect()->back()->with('alert', 'Vehicle created successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'error creating vehicle');
         }
-
-        $this->vehicleRepository->create($data);
-
-        return redirect()->back()->with('alert', 'Vehicle created successfully!');
     }
 
     /**
@@ -85,31 +90,35 @@ class VehicleController extends Controller
      */
     public function update(Request $request)
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        $vehicle = $this->vehicleRepository->find($request->id);
+            $vehicle = $this->vehicleRepository->find($request->id);
 
-        $vehicle->update($data);
+            $vehicle->update($data);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $fileExtension = $image->getClientOriginalExtension();
-            $fileName = $request->name . '.' . $fileExtension;
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $fileExtension = $image->getClientOriginalExtension();
+                $fileName = $request->name . '.' . $fileExtension;
 
-            $diskName = 'public';
-            $disk = Storage::disk($diskName);
+                $diskName = 'public';
+                $disk = Storage::disk($diskName);
 
-            $path = $request->file('image')->store('uploads/vehicles/' . $fileName, $diskName);
-            $url = $disk->url($path);
+                $path = $request->file('image')->store('uploads/vehicles/' . $fileName, $diskName);
+                $url = $disk->url($path);
 
-            $vehicle->update([
-                'image_path' => $path,
-                'image_url' => $url,
-                'image_disk' => $diskName,
-            ]);
+                $vehicle->update([
+                    'image_path' => $path,
+                    'image_url' => $url,
+                    'image_disk' => $diskName,
+                ]);
+            }
+
+            return redirect()->back()->with('alert', 'Vehicle updated successfully!');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'error updating vehicle');
         }
-
-        return redirect()->back()->with('alert', 'Vehicle updated successfully!');
     }
 
     /**
@@ -128,6 +137,29 @@ class VehicleController extends Controller
             Log::error("VehicleController (getVehiclesByType) : error fetching vehicles' | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
 
             return $this->apiError("something went wrong");
+        }
+    }
+
+    /**
+     * delete
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        try {
+            $vehicle = $this->vehicleRepository->find($id);
+
+            if (!$vehicle) {
+                return response()->json(['success' => false, 'message' => 'Vehicle not found'], 404);
+            }
+
+            $vehicle->delete();
+
+            return response()->json(['success' => true, 'message' => 'Vehicle deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Something went wrong'], 500);
         }
     }
 }

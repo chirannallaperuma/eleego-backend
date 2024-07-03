@@ -26,6 +26,7 @@ class CreateTbdbVehiclesTable extends Migration
             $table->string('availability');
             $table->string('category');
             $table->string('image')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

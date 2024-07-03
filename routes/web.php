@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/add', [\App\Http\Controllers\VehicleController::class, 'create'])->name('vehicles.create');
         Route::post('/store', [\App\Http\Controllers\VehicleController::class, 'store'])->name('vehicles.store');
         Route::post('/update', [\App\Http\Controllers\VehicleController::class, 'update'])->name('vehicles.update');
+        Route::post('/delete/{id}', [\App\Http\Controllers\VehicleController::class, 'delete'])->name('vehicles.delete');
     });
 
     // vehicle brands routes

@@ -41,6 +41,13 @@
                                 {{ session('alert') }}
                             </div>
                         @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <table class="table table-borderless">
                             <thead class="bg-gradient-navy">
                                 <tr>
@@ -192,7 +199,8 @@
                                                                 </div>
 
                                                                 <div class="col-lg-6">
-                                                                    <label for="seats" class="col-form-label">No. of
+                                                                    <label for="seats" class="col-form-label">No.
+                                                                        of
                                                                         seats:</label>
                                                                     <input type="text" class="form-control"
                                                                         id="seats" name="seats"
@@ -202,7 +210,8 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <label for="doors" class="col-form-label">No. of
+                                                                    <label for="doors" class="col-form-label">No.
+                                                                        of
                                                                         Doors:</label>
                                                                     <input type="text" class="form-control"
                                                                         id="doors" name="doors"
@@ -294,42 +303,28 @@
         $('div.alert').delay(2000).slideUp(300);
 
         function deleteVehicle(id) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.value === true) {
+            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "{{ url('/product/product-delete') }}/" + id,
-                        data: {
-                            _token: CSRF_TOKEN
-                        },
-                        dataType: 'JSON',
-                        success: function(results) {
-
-                            if (results.success === true) {
-                                swal("Done!", results.message, "success");
-                                location.reload();
-                            } else {
-                                swal("Error!", results.message, "error");
-                            }
-                        }
-                    });
-                } else {
-                    result.dismiss;
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('vehicles.delete', ':id') }}".replace(':id', id),
+                data: {
+                    _token: CSRF_TOKEN
+                },
+                dataType: 'json',
+                success: function(results) {
+                    if (results.success) {
+                        Swal.fire("Done!", results.message, "success").then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire("Error!", results.message, "error");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire("Error!", "Something went wrong: " + error, "error");
                 }
-
-            })
-
-
+            });
         }
 
         function imageUpload(input, index) {

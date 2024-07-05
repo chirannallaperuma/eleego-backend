@@ -63,18 +63,21 @@ class VehicleController extends Controller
         try {
             $data = $request->except('image');
 
+            $vehicle = $this->vehicleRepository->create($data);
+
             if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $fileExtension = $image->getClientOriginalExtension();
-                $fileName = $request->name . '.' . $fileExtension;
+                $diskName = 'public';
+                $disk = Storage::disk($diskName);
 
-                $data['image'] = $fileName;
+                $path = $request->file('image')->store('vehicles/' . $vehicle->id, $diskName);
+                $url = $disk->url($path);
 
-                $imagePath = 'uploads/vehicles';
-                $image->move($imagePath, $fileName);
+                $vehicle->update([
+                    'image_path' => $path,
+                    'image_url' => $url,
+                    'image_disk' => $diskName,
+                ]);
             }
-
-            $this->vehicleRepository->create($data);
 
             return redirect()->back()->with('alert', 'Vehicle created successfully!');
         } catch (Exception $e) {
@@ -98,14 +101,16 @@ class VehicleController extends Controller
             $vehicle->update($data);
 
             if ($request->hasFile('image')) {
-                $image = $request->file('image');
-                $fileExtension = $image->getClientOriginalExtension();
-                $fileName = $request->name . '.' . $fileExtension;
+                
+                $disk = Storage::disk($vehicle->image_disk);
+                if ($disk->exists($vehicle->image_path)) {
+                    $disk->delete($vehicle->image_path);
+                }
 
                 $diskName = 'public';
                 $disk = Storage::disk($diskName);
 
-                $path = $request->file('image')->store('uploads/vehicles/' . $fileName, $diskName);
+                $path = $request->file('image')->store('vehicles/' . $vehicle->id, $diskName);
                 $url = $disk->url($path);
 
                 $vehicle->update([

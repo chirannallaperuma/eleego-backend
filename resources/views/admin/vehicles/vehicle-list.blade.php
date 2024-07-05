@@ -64,8 +64,8 @@
                                     @foreach ($vehicles as $key => $vehicle)
                                         <tr>
                                             <td>{{ $vehicle->id }}</td>
-                                            @if ($vehicle->image != null)
-                                                <td><img src="/uploads/vehicles/{{ $vehicle->image }}" alt=""
+                                            @if ($vehicle->image_url != null)
+                                                <td><img src="{{ $vehicle->image_url }}" alt=""
                                                         class="img-thumbnail" width="45"></td>
                                             @elseif($vehicle->image == null)
                                                 <td><img src="/img/no_image.jpg" class="img-thumbnail" alt=""
@@ -261,12 +261,12 @@
                                                             </div>
 
                                                             <div class="form-group float-right" style="padding-top: 20px">
-                                                                @if ($vehicle->image != null)
+                                                                @if ($vehicle->image_url != null)
                                                                     <img id="vehicle_{{ $key }}"
                                                                         class="img-thumbnail" width="200"
-                                                                        src="/uploads/vehicles/{{ $vehicle->image }}"
+                                                                        src="{{ $vehicle->image_url }}"
                                                                         alt="vehicle" />
-                                                                @elseif($vehicle->image == null)
+                                                                @elseif($vehicle->image_url == null)
                                                                     <img id="vehicle_{{ $key }}"
                                                                         class="img-thumbnail" width="200"
                                                                         src="{{ asset('img/no_image.jpg') }}"

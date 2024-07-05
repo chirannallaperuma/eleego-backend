@@ -19,7 +19,9 @@ class VehicleModel extends Model
         'luggages',
         'availability',
         'category',
-        'image'
+        'image_path',
+        'image_url',
+        'image_disk',
     ];
 
     protected $dates = ['deleted_at'];

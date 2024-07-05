@@ -25,7 +25,9 @@ class CreateTbdbVehiclesTable extends Migration
             $table->integer('luggages');
             $table->string('availability');
             $table->string('category');
-            $table->string('image')->nullable();
+            $table->string('image_path')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('image_disk')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

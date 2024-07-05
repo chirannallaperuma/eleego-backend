@@ -21,6 +21,8 @@ class DbVehicleRepository extends BaseRepository implements VehicleRepositoryInt
      */
     public function getVehiclesByType($type)
     {
+        $type = $type == 'limousine' ? 'Limousine' : 'Rental';
+
         $vehicles = $this->model->where('category', $type)
             ->where('availability', VehicleRepositoryInterface::VEHICLE_AVAILABLE)
             ->get();

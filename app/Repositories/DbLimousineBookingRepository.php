@@ -25,11 +25,11 @@ class DbLimousineBookingRepository extends BaseRepository implements LimousineBo
             'title' => 'Limousine Booking',
             'body' => 'We are pleased to inform you that a new limousine booking has been received. Below are the details of the booking:',
             'quotation' => $quotation,
-            'email' => "chirannad@gmail.com"
+            'email' => config('mail.to')
         ];
 
         Mail::send('emails.limousine-booking', $emailData, function ($message) use ($quotation, $emailData) {
-            $message->to("chirannad@gmail.com")
+            $message->to(config('mail.to'))
                 ->subject('Account' . ' ' . $emailData['title'])
                 ->from($quotation->customer_email);
         });

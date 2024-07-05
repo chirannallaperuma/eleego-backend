@@ -37,7 +37,7 @@
                                 {{ session('alert') }}
                             </div>
                         @endif
-                        <table class="table table-borderless">
+                        <table class="table table-borderless table-responsive-lg">
                             <thead class="bg-gradient-navy">
                                 <tr>
                                     <th>ID</th>

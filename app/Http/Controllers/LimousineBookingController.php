@@ -61,7 +61,7 @@ class LimousineBookingController extends Controller
             $quotation = $this->limousineBookingRepository->create($request->all());
 
             if ($quotation) {
-                // $this->limousineBookingRepository->sendBookingConfirmMail($quotation);
+                $this->limousineBookingRepository->sendBookingConfirmMail($quotation);
 
                 $vehicle->update([
                     'availability' => VehicleRepositoryInterface::VEHICLE_BOOKED

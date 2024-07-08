@@ -31,7 +31,7 @@ class DbLimousineBookingRepository extends BaseRepository implements LimousineBo
         Mail::send('emails.limousine-booking', $emailData, function ($message) use ($quotation, $emailData) {
             $message->to('chirannad@gmail.com')
                 ->subject('Account' . ' ' . $emailData['title'])
-                ->from($quotation->customer_email);
+                ->from("testeleego@eleego.ch");
         });
     }
     

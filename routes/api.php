@@ -25,4 +25,6 @@ Route::group(['prefix' => 'v1'], function () {
 
     // vehicles routes
     Route::get('/vehicles/{type}', [\App\Http\Controllers\VehicleController::class, 'getVehiclesByType']);
+    Route::get('/vehicles-availability', [\App\Http\Controllers\VehicleController::class, 'checkVehicleAvailability']);
+    Route::get('/vehicle/{id}', [\App\Http\Controllers\VehicleController::class, 'getVehicle']);
 });

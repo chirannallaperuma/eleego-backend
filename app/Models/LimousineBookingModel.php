@@ -38,6 +38,6 @@ class LimousineBookingModel extends Model
 
     public function vehicle()
     {
-        return $this->hasOne(VehicleModel::class, 'id', 'vehicle_id');
+        return $this->belongsTo(VehicleModel::class, 'vehicle_id', 'id');
     }
 }

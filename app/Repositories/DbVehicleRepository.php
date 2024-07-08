@@ -12,7 +12,7 @@ class DbVehicleRepository extends BaseRepository implements VehicleRepositoryInt
     {
         $this->model = $model;
     }
-    
+
     /**
      * getVehiclesByType
      *
@@ -28,5 +28,29 @@ class DbVehicleRepository extends BaseRepository implements VehicleRepositoryInt
             ->get();
 
         return $vehicles;
+    }
+    
+    /**
+     * checkAvailability
+     *
+     * @param  mixed $data
+     * @return void
+     */
+    public function checkAvailability($data)
+    {
+        $vehicle = $this->model->find($data['vehicle_id']);
+
+        $startDate = $data['start_date'];
+        $endDate = $data['end_date'];
+
+        return !$vehicle->limousineBookings()
+            ->where(function ($query) use ($startDate, $endDate) {
+                $query->whereBetween('pickup_date_time', [$startDate, $endDate])
+                    ->orWhereBetween('drop_date_time', [$startDate, $endDate])
+                    ->orWhere(function ($query) use ($startDate, $endDate) {
+                        $query->where('pickup_date_time', '<', $startDate)
+                            ->where('drop_date_time', '>', $endDate);
+                    });
+            })->exists();
     }
 }

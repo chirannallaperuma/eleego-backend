@@ -8,4 +8,6 @@ interface VehicleRepositoryInterface
     const VEHICLE_AVAILABLE = "Available";
 
     public function getVehiclesByType($type);
+
+    public function checkAvailability($data);
 }

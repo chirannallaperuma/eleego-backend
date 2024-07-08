@@ -8,6 +8,7 @@ use App\Repositories\Contracts\VehicleBrandRepositoryInterface;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -101,7 +102,7 @@ class VehicleController extends Controller
             $vehicle->update($data);
 
             if ($request->hasFile('image')) {
-                
+
                 $disk = Storage::disk($vehicle->image_disk);
                 if ($disk->exists($vehicle->image_path)) {
                     $disk->delete($vehicle->image_path);
@@ -165,6 +166,54 @@ class VehicleController extends Controller
             return response()->json(['success' => true, 'message' => 'Vehicle deleted successfully']);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Something went wrong'], 500);
+        }
+    }
+
+    /**
+     * checkVehicleAvailability
+     *
+     * @param  mixed $request
+     * @return void
+     */
+    public function checkVehicleAvailability(Request $request)
+    {
+        try {
+            $vehicle = $this->vehicleRepository->find($request->vehicle_id);
+
+            if (!$vehicle) {
+                return $this->apiError("vehicle not found", Response::HTTP_NOT_FOUND);
+            }
+
+            $response = $this->vehicleRepository->checkAvailability($request->all());
+
+            return $this->apiSuccess($response);
+        } catch (Throwable $th) {
+            Log::error("VehicleController (checkVehicleAvailability) : error checking vehicles availability' | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
+
+            return $this->apiError("something went wrong");
+        }
+    }
+
+    /**
+     * getVehicle
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function getVehicle($id)
+    {
+        try {
+            $vehicle = $this->vehicleRepository->find($id);
+
+            if (!$vehicle) {
+                return $this->apiError("vehicle not found", Response::HTTP_NOT_FOUND);
+            }
+
+            return $this->apiSuccess($vehicle);
+        } catch (Throwable $th) {
+            Log::error("VehicleController (getVehicle) : error fetching vehicle' | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
+
+            return $this->apiError("something went wrong");
         }
     }
 }

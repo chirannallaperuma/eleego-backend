@@ -30,4 +30,9 @@ class VehicleModel extends Model
     {
         return $this->hasOne(VehicleBrandModel::class, 'brand_name', 'brand_name');
     }
+
+    public function limousineBookings()
+    {
+        return $this->hasMany(LimousineBookingModel::class, 'id', 'vehicle_id');
+    }
 }

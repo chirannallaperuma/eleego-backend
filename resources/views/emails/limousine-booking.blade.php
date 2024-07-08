@@ -16,15 +16,15 @@
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
+            background: linear-gradient(135deg, #d4af37, #fff);
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            border-top: 5px solid #007bff;
+            border-top: 5px solid #d4af37; /* Gold */
         }
         .header {
-            background-color: #007bff;
-            color: #fff;
+            background-color: #333; /* Black */
+            color: #fff; /* White */
             text-align: center;
             padding: 20px 0;
             border-radius: 10px 10px 0 0;
@@ -36,13 +36,15 @@
         }
         .content {
             padding: 20px;
+            background-color: #fff; /* White */
+            border-radius: 0 0 10px 10px;
         }
         .content p {
             margin: 10px 0;
             line-height: 1.6;
         }
         .content p strong {
-            color: #007bff;
+            color: #d4af37; /* Gold */
         }
         .footer {
             text-align: center;
@@ -63,12 +65,12 @@
             margin: 5px 0;
         }
         .highlight {
-            color: #007bff;
+            color: #d4af37; /* Gold */
         }
         .cta {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #28a745;
+            background-color: #555; /* Dark Grey */
             color: #fff;
             text-align: center;
             text-decoration: none;
@@ -81,7 +83,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>New Limousine Quotation</h1>
+            <h1>Limousine Quotation</h1>
         </div>
         <div class="content">
             <p>Hello,</p>
@@ -91,6 +93,7 @@
             <div class="quotation-details">
                 <p><strong>Quotation ID:</strong> {{ $quotation->id }}</p>
                 <p><strong>Vehicle ID:</strong> {{ $quotation->vehicle_id }}</p>
+                <p><strong>Vehicle:</strong> {{ $quotation->vehicle->name }}</p>
                 <p><strong>Service Type:</strong> {{ $quotation->service_type }}</p>
                 <p><strong>Pickup Date and Time:</strong> {{ $quotation->pickup_date_time }}</p>
                 <p><strong>Drop Date and Time:</strong> {{ $quotation->drop_date_time }}</p>
@@ -116,7 +119,7 @@
             
             <p>Thank you.</p>
 
-            <a href="[Your Action URL]" class="cta">View Quotation</a>
+            {{-- <a href="[Your Action URL]" class="cta">View Quotation</a> --}}
         </div>
         <div class="footer">
             <p>This is an automated message. Please do not reply.</p>

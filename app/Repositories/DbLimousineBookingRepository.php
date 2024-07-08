@@ -25,13 +25,13 @@ class DbLimousineBookingRepository extends BaseRepository implements LimousineBo
             'title' => 'Limousine Booking',
             'body' => 'We are pleased to inform you that a new limousine booking has been received. Below are the details of the booking:',
             'quotation' => $quotation,
-            'email' => 'info@eleego.ch'
+            'email' => config('mail.to')
         ];
 
-        Mail::send('emails.limousine-booking', $emailData, function ($message) use ($quotation, $emailData) {
-            $message->to('chirannad@gmail.com')
+        Mail::send('emails.limousine-booking', $emailData, function ($message) use ($emailData) {
+            $message->to(config('mail.to'))
                 ->subject('Account' . ' ' . $emailData['title'])
-                ->from("testeleego@eleego.ch");
+                ->from(config('mail.from.address'));
         });
     }
     

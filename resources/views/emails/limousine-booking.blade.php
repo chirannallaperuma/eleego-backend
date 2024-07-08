@@ -84,7 +84,7 @@
             <h1>New Limousine Quotation</h1>
         </div>
         <div class="content">
-            <p>Hello {{ $email }},</p>
+            <p>Hello,</p>
             
             <p>We are pleased to inform you that a new limousine quotation has been received. Below are the details of the quotation:</p>
             

@@ -54,10 +54,6 @@ class LimousineBookingController extends Controller
                 return $this->apiError("selected vehicle not found", Response::HTTP_NOT_FOUND);
             }
 
-            if ($vehicle->availability == VehicleRepositoryInterface::VEHICLE_BOOKED) {
-                return $this->apiError("selected vehicle not available for booking", Response::HTTP_BAD_REQUEST);
-            }
-
             $quotation = $this->limousineBookingRepository->create($request->all());
 
             if ($quotation) {

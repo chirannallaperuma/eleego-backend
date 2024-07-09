@@ -23,7 +23,8 @@ class VehicleModel extends Model
         'image_url',
         'image_disk',
         'last_booking_pickup_date',
-        'last_booking_drop_date'
+        'last_booking_drop_date',
+        'description'
     ];
 
     protected $dates = ['deleted_at'];

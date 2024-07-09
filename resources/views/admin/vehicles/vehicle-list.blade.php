@@ -260,22 +260,32 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group float-right" style="padding-top: 20px">
-                                                                @if ($vehicle->image_url != null)
-                                                                    <img id="vehicle_{{ $key }}"
-                                                                        class="img-thumbnail" width="200"
-                                                                        src="{{ $vehicle->image_url }}"
-                                                                        alt="vehicle" />
-                                                                @elseif($vehicle->image_url == null)
-                                                                    <img id="vehicle_{{ $key }}"
-                                                                        class="img-thumbnail" width="200"
-                                                                        src="{{ asset('img/no_image.jpg') }}"
-                                                                        alt="vehicle" />
-                                                                @endif
-                                                                <p>Choose image</p>
-                                                                <input type='file' name="image"
-                                                                    id="itempic_{{ $key }}"
-                                                                    onchange="imageUpload(this,'{{ $key }}')" />
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label for="luggages"
+                                                                        class="col-form-label">luggages:</label>
+                                                                    <textarea id="description" type="text" step="any" min="0"
+                                                                        class="form-control @error('description') is-invalid @enderror" name="description"
+                                                                        value="{{ old('description') }}">{{ $vehicle->description }}</textarea>
+                                                                </div>
+
+                                                                <div class="col-lg-6" style="padding-top: 30px">
+                                                                    @if ($vehicle->image_url != null)
+                                                                        <img id="vehicle_{{ $key }}"
+                                                                            class="img-thumbnail" width="200"
+                                                                            src="{{ $vehicle->image_url }}"
+                                                                            alt="vehicle" />
+                                                                    @elseif($vehicle->image_url == null)
+                                                                        <img id="vehicle_{{ $key }}"
+                                                                            class="img-thumbnail" width="200"
+                                                                            src="{{ asset('img/no_image.jpg') }}"
+                                                                            alt="vehicle" />
+                                                                    @endif
+                                                                    <p>Choose image</p>
+                                                                    <input type='file' name="image"
+                                                                        id="itempic_{{ $key }}"
+                                                                        onchange="imageUpload(this,'{{ $key }}')" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">

@@ -249,6 +249,22 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <label for="description" class="col-md-4 col-form-label text-md-right">Description</label>
+
+                                        <div class="col-md-6">
+                                            <textarea id="description" type="text" step="any" min="0"
+                                                class="form-control @error('description') is-invalid @enderror" name="description"
+                                                value="{{ old('description') }}"></textarea>
+
+                                            @error('description')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card col-lg-4">
                                     <div class="card-body">

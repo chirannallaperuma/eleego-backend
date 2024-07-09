@@ -111,7 +111,6 @@
                 @endforeach
                 
                 <p><strong>Additional Information:</strong> {{ $quotation->additional_information }}</p>
-                <p><strong>Total Amount:</strong> <span class="highlight">${{ $quotation->total_amount }}</span></p>
                 <p><strong>Status:</strong> {{ $quotation->status }}</p>
             </div>
             

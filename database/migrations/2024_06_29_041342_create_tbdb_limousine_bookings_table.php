@@ -29,7 +29,7 @@ class CreateTbdbLimousineBookingsTable extends Migration
             $table->json('additional_services')->nullable();
             $table->text('additional_information')->nullable();
             $table->string('status')->default('pending');
-            $table->integer('total_amount');
+            $table->integer('total_amount')->nullable();
             $table->timestamps();
         });
     }

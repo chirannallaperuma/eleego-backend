@@ -38,7 +38,7 @@ class LimousineBookingController extends Controller
 
         return view('admin.limousine-bookings.bookings', ['bookings' => $bookings]);
     }
-    
+
     /**
      * confirmBooking
      *
@@ -64,7 +64,9 @@ class LimousineBookingController extends Controller
                 $this->limousineBookingRepository->sendBookingConfirmMail($quotation);
 
                 $vehicle->update([
-                    'availability' => VehicleRepositoryInterface::VEHICLE_BOOKED
+                    'availability' => VehicleRepositoryInterface::VEHICLE_BOOKED,
+                    'last_booking_pickup_date' => $request->pickup_date_time,
+                    'last_booking_drop_date' => $request->drop_date_time
                 ]);
             }
 

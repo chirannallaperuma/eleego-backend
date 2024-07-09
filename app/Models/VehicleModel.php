@@ -22,9 +22,16 @@ class VehicleModel extends Model
         'image_path',
         'image_url',
         'image_disk',
+        'last_booking_pickup_date',
+        'last_booking_drop_date'
     ];
 
     protected $dates = ['deleted_at'];
+
+    protected $casts = [
+        'last_booking_pickup_date' => 'datetime',
+        'last_booking_drop_date' => 'datetime'
+    ];
 
     public function brands()
     {

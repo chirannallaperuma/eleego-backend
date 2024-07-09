@@ -28,6 +28,8 @@ class CreateTbdbVehiclesTable extends Migration
             $table->string('image_path')->nullable();
             $table->string('image_url')->nullable();
             $table->string('image_disk')->nullable();
+            $table->dateTime('last_booking_pickup_date')->nullable();
+            $table->dateTime('last_booking_drop_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

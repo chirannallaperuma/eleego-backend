@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\VehicleModel;
 use App\Repositories\BaseRepository;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
+use Carbon\Carbon;
 
 class DbVehicleRepository extends BaseRepository implements VehicleRepositoryInterface
 {
@@ -37,19 +38,25 @@ class DbVehicleRepository extends BaseRepository implements VehicleRepositoryInt
      */
     public function checkAvailability($data)
     {
-        $vehicle = $this->model->find($data['vehicle_id']);
+        $startDate = Carbon::parse($data['start_date']);
+        $endDate = Carbon::parse($data['end_date']);
 
-        $startDate = $data['start_date'];
-        $endDate = $data['end_date'];
-
-        return !$vehicle->limousineBookings()
+        $overlappingBooking = $this->model
+            ->where('id', $data['vehicle_id'])
             ->where(function ($query) use ($startDate, $endDate) {
-                $query->whereBetween('pickup_date_time', [$startDate, $endDate])
-                    ->orWhereBetween('drop_date_time', [$startDate, $endDate])
+                $query->whereBetween('last_booking_pickup_date', [$startDate, $endDate])
+                    ->orWhereBetween('last_booking_drop_date', [$startDate, $endDate])
                     ->orWhere(function ($query) use ($startDate, $endDate) {
-                        $query->where('pickup_date_time', '<', $startDate)
-                            ->where('drop_date_time', '>', $endDate);
+                        $query->where('last_booking_pickup_date', '<=', $startDate)
+                            ->where('last_booking_drop_date', '>=', $endDate);
                     });
-            })->exists();
+            })
+            ->exists();
+
+        if ($overlappingBooking) {
+            return false;
+        }
+
+        return true;
     }
 }

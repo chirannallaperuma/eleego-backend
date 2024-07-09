@@ -45,7 +45,7 @@
                                     <th>Service Type</th>
                                     <th>Customer Name</th>
                                     <th>Customer Email</th>
-                                    <th>Total</th>
+                                    {{-- <th>Total</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -58,7 +58,7 @@
                                             <td>{{ $booking->service_type }}</td>
                                             <td>{{ $booking->customer_name }}</td>
                                             <td>{{ $booking->customer_email }}</td>
-                                            <td>${{ $booking->total_amount }}</td>
+                                            {{-- <td>${{ $booking->total_amount }}</td> --}}
                                             <td><button class="btn btn-warning btn-sm" data-toggle="modal"
                                                     data-target="#bookingModal_{{ $key }}" data-whatever="@mdo"
                                                     id="view_{{ $key }}"><i class="fa fa-eye"></i></button>
@@ -195,12 +195,12 @@
                                                                         {{ $booking->payment_method }}</div>
                                                                 </div>
 
-                                                                <div class="col-md-6">
+                                                                {{-- <div class="col-md-6">
                                                                     <label for="total_amount" class="col-form-label">Total
                                                                         Amount:</label>
                                                                     <div class="form-control-plaintext">
                                                                         ${{ $booking->total_amount }}</div>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
 
                                                             <div class="row">

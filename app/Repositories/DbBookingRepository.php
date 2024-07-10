@@ -22,7 +22,7 @@ class DbBookingRepository extends BaseRepository implements BookingRepositoryInt
     public function sendBookingConfirmMail($quotation)
     {
         $emailData = [
-            'title' => 'Limousine Booking',
+            'title' => 'Booking Request Received',
             'body' => 'We are pleased to inform you that a new limousine booking has been received. Below are the details of the booking:',
             'quotation' => $quotation,
             'email' => config('mail.to')
@@ -30,7 +30,7 @@ class DbBookingRepository extends BaseRepository implements BookingRepositoryInt
 
         Mail::send('emails.limousine-booking', $emailData, function ($message) use ($emailData) {
             $message->to(config('mail.to'))
-                ->subject('Account' . ' ' . $emailData['title'])
+                ->subject($emailData['title'])
                 ->from(config('mail.from.address'));
         });
     }

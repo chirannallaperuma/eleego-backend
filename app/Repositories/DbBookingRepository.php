@@ -28,9 +28,15 @@ class DbBookingRepository extends BaseRepository implements BookingRepositoryInt
             'email' => config('mail.to')
         ];
 
-        Mail::send('emails.limousine-booking', $emailData, function ($message) use ($emailData) {
+        Mail::send('emails.booking-admin', $emailData, function ($message) use ($emailData) {
             $message->to(config('mail.to'))
                 ->subject($emailData['title'])
+                ->from(config('mail.from.address'));
+        });
+
+        Mail::send('emails.booking-customer', $emailData, function ($message) use ($quotation) {
+            $message->to($quotation['customer_email'])
+                ->subject('Booking Request Sent')
                 ->from(config('mail.from.address'));
         });
     }

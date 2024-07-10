@@ -13,9 +13,10 @@ class CreateTbdbLimousineBookingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbdb_limousine_bookings', function (Blueprint $table) {
+        Schema::create('tbdb_bookings', function (Blueprint $table) {
             $table->id();
             $table->integer('vehicle_id');
+            $table->string('category');
             $table->dateTime('pickup_date_time');
             $table->dateTime('drop_date_time');
             $table->string('service_type');
@@ -41,6 +42,6 @@ class CreateTbdbLimousineBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbdb_limousine_bookings');
+        Schema::dropIfExists('tbdb_bookings');
     }
 }

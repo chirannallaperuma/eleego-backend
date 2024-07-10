@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // bookings routes
-    Route::group(['prefix' => 'limousine-bookings'], function () {
-        Route::get('/', [\App\Http\Controllers\LimousineBookingController::class, 'index'])->name('limousine-bookings.index');
+    Route::group(['prefix' => 'bookings'], function () {
+        Route::get('/{type}', [\App\Http\Controllers\BookingController::class, 'index'])->name('bookings.index');
     });
 });

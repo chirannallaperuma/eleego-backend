@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Models\LimousineBookingModel;
-use App\Repositories\Contracts\LimousineBookingRepositoryInterface;
+use App\Models\BookingModel;
+use App\Repositories\Contracts\BookingRepositoryInterface;
 use Illuminate\Support\Facades\Mail;
 
-class DbLimousineBookingRepository extends BaseRepository implements LimousineBookingRepositoryInterface
+class DbBookingRepository extends BaseRepository implements BookingRepositoryInterface
 {
-    public function __construct(LimousineBookingModel $model)
+    public function __construct(BookingModel $model)
     {
         $this->model = $model;
     }
@@ -36,13 +36,13 @@ class DbLimousineBookingRepository extends BaseRepository implements LimousineBo
     }
     
     /**
-     * getAllBookings
+     * getAllBookingsByCategory
      *
      * @return void
      */
-    public function getAllBookings()
+    public function getAllBookingsByCategory($category)
     {
-        $bookings = $this->model->orderBy('created_at', 'desc')->paginate(10);
+        $bookings = $this->model->where('category', $category)->orderBy('created_at', 'desc')->paginate(10);
 
         return $bookings;
     }

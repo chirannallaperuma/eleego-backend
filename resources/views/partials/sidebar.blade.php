@@ -85,13 +85,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/limousine-bookings" class="nav-link">
+                                <a href="/bookings/limousine" class="nav-link">
                                     <i class="fa fa-file-alt nav-icon"></i>
                                     <p>Limousine</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/vehicles" class="nav-link">
+                                <a href="/bookings/rental" class="nav-link">
                                     <i class="fa fa-clipboard-list nav-icon"></i>
                                     <p>Rental</p>
                                 </a>

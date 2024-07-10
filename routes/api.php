@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1'], function () {
 
     // limousine booking routes
-    Route::post('/limousine-booking', [\App\Http\Controllers\LimousineBookingController::class, 'confirmBooking']);
+    Route::post('/confirm-booking', [\App\Http\Controllers\BookingController::class, 'confirmBooking']);
 
     // vehicles routes
     Route::get('/vehicles/{type}', [\App\Http\Controllers\VehicleController::class, 'getVehiclesByType']);

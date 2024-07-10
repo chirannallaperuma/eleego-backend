@@ -4,26 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiHelper;
-use App\Repositories\Contracts\LimousineBookingRepositoryInterface;
+use App\Repositories\Contracts\BookingRepositoryInterface;
 use App\Repositories\Contracts\VehicleRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class LimousineBookingController extends Controller
+class BookingController extends Controller
 {
     use ApiHelper;
 
-    protected $limousineBookingRepository;
+    protected $bookingRepository;
 
     protected $vehicleRepository;
 
     public function __construct(
-        LimousineBookingRepositoryInterface $limousineBookingRepository,
+        BookingRepositoryInterface $bookingRepository,
         VehicleRepositoryInterface $vehicleRepository
     ) {
-        $this->limousineBookingRepository = $limousineBookingRepository;
+        $this->bookingRepository = $bookingRepository;
         $this->vehicleRepository = $vehicleRepository;
     }
 
@@ -32,11 +32,15 @@ class LimousineBookingController extends Controller
      *
      * @return void
      */
-    public function index()
+    public function index($category)
     {
-        $bookings = $this->limousineBookingRepository->getAllBookings(['vehicle']);
+        $bookings = $this->bookingRepository->getAllBookingsByCategory($category);
 
-        return view('admin.limousine-bookings.bookings', ['bookings' => $bookings]);
+        if ($category == 'limousine') {
+            return view('admin.bookings.limousine-bookings', ['bookings' => $bookings]);
+        } else {
+            return view('admin.bookings.rental-bookings', ['bookings' => $bookings]);
+        }
     }
 
     /**
@@ -54,10 +58,10 @@ class LimousineBookingController extends Controller
                 return $this->apiError("selected vehicle not found", Response::HTTP_NOT_FOUND);
             }
 
-            $quotation = $this->limousineBookingRepository->create($request->all());
+            $quotation = $this->bookingRepository->create($request->all());
 
             if ($quotation) {
-                $this->limousineBookingRepository->sendBookingConfirmMail($quotation);
+                $this->bookingRepository->sendBookingConfirmMail($quotation);
 
                 $vehicle->update([
                     'availability' => VehicleRepositoryInterface::VEHICLE_BOOKED,
@@ -66,11 +70,11 @@ class LimousineBookingController extends Controller
                 ]);
             }
 
-            Log::info("LimousineBookingController (confirmBooking) : booking confirmed : email - {$request->customer_email}");
+            Log::info("BookingController (confirmBooking) : booking confirmed : email - {$request->customer_email}");
 
             return $this->apiSuccess($quotation);
         } catch (Throwable $th) {
-            Log::error("LimousineBookingController (confirmBooking) : error creating quotation' , email - {$request->customer_email}  | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
+            Log::error("BookingController (confirmBooking) : error creating quotation' , email - {$request->customer_email}  | Reason - {$th->getMessage()}" . PHP_EOL . $th->getTraceAsString());
 
             return $this->apiError("something went wrong");
         }

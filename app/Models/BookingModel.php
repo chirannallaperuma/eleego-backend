@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LimousineBookingModel extends Model
+class BookingModel extends Model
 {
-    protected $table = 'tbdb_limousine_bookings';
+    protected $table = 'tbdb_bookings';
 
     protected $fillable = [
         'vehicle_id',
+        'category',
         'pickup_date_time',
         'drop_date_time',
         'service_type',

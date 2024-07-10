@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Contracts;
 
-interface LimousineBookingRepositoryInterface
+interface BookingRepositoryInterface
 {
     public function sendBookingConfirmMail($quotation);
 
-    public function getAllBookings();
+    public function getAllBookingsByCategory($category);
 }

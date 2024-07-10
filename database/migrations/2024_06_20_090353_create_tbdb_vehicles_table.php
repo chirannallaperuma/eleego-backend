@@ -19,10 +19,10 @@ class CreateTbdbVehiclesTable extends Migration
             $table->string('name');
             $table->string('transmission');
             $table->string('fuel_type');
-            $table->integer('capacity');
+            $table->double('per_day_amount')->nullable();
             $table->integer('seats');
             $table->integer('doors');
-            $table->integer('luggages');
+            $table->integer('baggages');
             $table->string('availability');
             $table->string('category');
             $table->string('image_path')->nullable();

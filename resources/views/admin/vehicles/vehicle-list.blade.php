@@ -56,6 +56,7 @@
                                     <th>Brand</th>
                                     <th>Vehicle Name</th>
                                     <th>Transmission</th>
+                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -74,6 +75,7 @@
                                             <td>{{ $vehicle->brand_name }}</td>
                                             <td>{{ $vehicle->name }}</td>
                                             <td>{{ $vehicle->transmission }}</td>
+                                            <td>{{ $vehicle->category }}</td>
                                             <td><button class="btn btn-warning btn-sm" data-toggle="modal"
                                                     data-target="#vehicleModal_{{ $key }}" data-whatever="@mdo"
                                                     id="view_{{ $key }}"><i class="fa fa-eye"></i></button>
@@ -191,11 +193,10 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <label for="capacity" class="col-form-label">Engine
-                                                                        Capacity (CC):</label>
+                                                                    <label for="per_day_amount" class="col-form-label">Per Day Amount</label>
                                                                     <input type="text" class="form-control"
-                                                                        id="capacity" name="capacity"
-                                                                        value="{{ $vehicle->capacity }}">
+                                                                        id="per_day_amount" name="per_day_amount" step="any" min="0"
+                                                                        value="{{ $vehicle->per_day_amount }}">
                                                                 </div>
 
                                                                 <div class="col-lg-6">
@@ -219,11 +220,11 @@
                                                                 </div>
 
                                                                 <div class="col-lg-6">
-                                                                    <label for="luggages"
-                                                                        class="col-form-label">luggages:</label>
+                                                                    <label for="baggages"
+                                                                        class="col-form-label">baggages:</label>
                                                                     <input type="text" class="form-control"
-                                                                        id="luggages" name="luggages"
-                                                                        value="{{ $vehicle->luggages }}">
+                                                                        id="baggages" name="baggages"
+                                                                        value="{{ $vehicle->baggages }}">
                                                                 </div>
                                                             </div>
 
@@ -262,8 +263,8 @@
 
                                                             <div class="row">
                                                                 <div class="col-lg-6">
-                                                                    <label for="luggages"
-                                                                        class="col-form-label">luggages:</label>
+                                                                    <label for="baggages"
+                                                                        class="col-form-label">baggages:</label>
                                                                     <textarea id="description" type="text" step="any" min="0"
                                                                         class="form-control @error('description') is-invalid @enderror" name="description"
                                                                         value="{{ old('description') }}">{{ $vehicle->description }}</textarea>

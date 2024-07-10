@@ -142,16 +142,14 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="capacity" class="col-md-4 col-form-label text-md-right">Engine
-                                            Capacity
-                                            (CC)</label>
+                                        <label for="per_day_amount" class="col-md-4 col-form-label text-md-right">Per Day Amount</label>
 
                                         <div class="col-md-6">
-                                            <input id="capacity" type="number" min="0"
-                                                class="form-control @error('capacity') is-invalid @enderror"
-                                                name="capacity" value="{{ old('capacity') }}">
+                                            <input id="per_day_amount" type="number" step="any" min="0"
+                                                class="form-control @error('per_day_amount') is-invalid @enderror"
+                                                name="per_day_amount" value="{{ old('per_day_amount') }}">
 
-                                            @error('capacity')
+                                            @error('per_day_amount')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -194,15 +192,15 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="luggages"
-                                            class="col-md-4 col-form-label text-md-right">luggages</label>
+                                        <label for="baggages"
+                                            class="col-md-4 col-form-label text-md-right">baggages</label>
 
                                         <div class="col-md-6">
-                                            <input id="luggages" type="number" step="any" min="0"
-                                                class="form-control @error('luggages') is-invalid @enderror"
-                                                name="luggages" value="{{ old('luggages') }}">
+                                            <input id="baggages" type="number" step="any" min="0"
+                                                class="form-control @error('baggages') is-invalid @enderror"
+                                                name="baggages" value="{{ old('baggages') }}">
 
-                                            @error('luggages')
+                                            @error('baggages')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>

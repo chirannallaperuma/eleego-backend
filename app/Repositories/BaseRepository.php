@@ -64,15 +64,8 @@ class BaseRepository
      * @param  mixed $paginate
      * @return void
      */
-    public function findAllPaginated($relations = array(), $paginate = 10)
+    public function findAllPaginated()
     {
-        $model = $this->model;
-
-        //eager load relations
-        foreach($relations as $relation) {
-            $model->with($relation);
-        }
-
-        return $model->paginate($paginate);
+        return $this->model->paginate('10');
     }
 }

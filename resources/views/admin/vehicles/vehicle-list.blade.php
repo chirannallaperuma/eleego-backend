@@ -193,9 +193,11 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <label for="per_day_amount" class="col-form-label">Per Day Amount</label>
+                                                                    <label for="per_day_amount" class="col-form-label">Per
+                                                                        Day Amount</label>
                                                                     <input type="text" class="form-control"
-                                                                        id="per_day_amount" name="per_day_amount" step="any" min="0"
+                                                                        id="per_day_amount" name="per_day_amount"
+                                                                        step="any" min="0"
                                                                         value="{{ $vehicle->per_day_amount }}">
                                                                 </div>
 
@@ -304,6 +306,7 @@
                                     @endforeach
                                 @endif
                             </tbody>
+                            {{ $vehicles->links() }}
                         </table>
                     </div>
                 </div>
@@ -314,26 +317,38 @@
         $('div.alert').delay(2000).slideUp(300);
 
         function deleteVehicle(id) {
-            var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('vehicles.delete', ':id') }}".replace(':id', id),
-                data: {
-                    _token: CSRF_TOKEN
-                },
-                dataType: 'json',
-                success: function(results) {
-                    if (results.success) {
-                        Swal.fire("Done!", results.message, "success").then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire("Error!", results.message, "error");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    Swal.fire("Error!", "Something went wrong: " + error, "error");
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('vehicles.delete', ':id') }}".replace(':id', id),
+                        data: {
+                            _token: CSRF_TOKEN
+                        },
+                        dataType: 'json',
+                        success: function(results) {
+                            if (results.success) {
+                                Swal.fire("Done!", results.message, "success").then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire("Error!", results.message, "error");
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire("Error!", "Something went wrong: " + error, "error");
+                        }
+                    });
                 }
             });
         }

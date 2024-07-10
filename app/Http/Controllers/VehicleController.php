@@ -36,7 +36,7 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        $vehicles = $this->vehicleRepository->findAll();
+        $vehicles = $this->vehicleRepository->findAllPaginated();
 
         $brands = $this->vehicleBrandRepository->findAll();
 
@@ -61,6 +61,19 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'brand_name' => 'required',
+            'name' => 'required',
+            'transmission' => 'required',
+            'fuel_type' => 'required',
+            'seats' => 'required',
+            'doors' => 'required',
+            'baggages' => 'required',
+            'availability' => 'required',
+            'category' => 'required',
+            'image' => 'required',
+        ]);
+
         try {
             $data = $request->except('image');
 

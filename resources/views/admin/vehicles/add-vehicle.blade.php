@@ -132,6 +132,14 @@
                                                     Electric
                                                 </label>
                                             </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input @error('fuel_type') is-invalid @enderror"
+                                                    type="radio" name="fuel_type" id="hybrid" value="hybrid"
+                                                    {{ old('fuel_type') == 'hybrid' ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="hybrid">
+                                                    Hybrid
+                                                </label>
+                                            </div>
 
                                             @error('fuel_type')
                                                 <span class="invalid-feedback" role="alert">

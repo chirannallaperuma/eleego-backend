@@ -275,9 +275,9 @@
 
                                                             <div class="row">
                                                                 <div class="col-lg-6">
-                                                                    <label for="baggages"
-                                                                        class="col-form-label">baggages:</label>
-                                                                    <textarea id="description" type="text" step="any" min="0"
+                                                                    <label for="description"
+                                                                        class="col-form-label">Description:</label>
+                                                                    <textarea id="description" type="text" step="any" min="0" style="height: 200px"
                                                                         class="form-control @error('description') is-invalid @enderror" name="description"
                                                                         value="{{ old('description') }}">{{ $vehicle->description }}</textarea>
                                                                 </div>

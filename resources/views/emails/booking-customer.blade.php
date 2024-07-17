@@ -131,6 +131,9 @@
                     @foreach ($quotation->additional_services as $service)
                         <p>- {{ $service }}</p>
                     @endforeach
+
+                    <p><strong>Child Count:</strong> {{ $quotation->child_count }}</p>
+                    <p><strong>Child Ages:</strong> {{ $quotation->child_ages }}</p>
                 @endisset
 
                 <p><strong>Additional Information:</strong> {{ $quotation->additional_information }}</p>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
             padding: 0;
             color: #333;
         }
+
         .container {
             max-width: 600px;
             margin: 20px auto;
@@ -20,32 +22,43 @@
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            border-top: 5px solid #d4af37; /* Gold */
+            border-top: 5px solid #d4af37;
+            /* Gold */
         }
+
         .header {
-            background-color: #333; /* Black */
-            color: #fff; /* White */
+            background-color: #333;
+            /* Black */
+            color: #fff;
+            /* White */
             text-align: center;
             padding: 20px 0;
             border-radius: 10px 10px 0 0;
         }
+
         .header h1 {
             margin: 0;
             font-size: 24px;
             text-transform: uppercase;
         }
+
         .content {
             padding: 20px;
-            background-color: #fff; /* White */
+            background-color: #fff;
+            /* White */
             border-radius: 0 0 10px 10px;
         }
+
         .content p {
             margin: 10px 0;
             line-height: 1.6;
         }
+
         .content p strong {
-            color: #d4af37; /* Gold */
+            color: #d4af37;
+            /* Gold */
         }
+
         .footer {
             text-align: center;
             padding: 20px;
@@ -54,6 +67,7 @@
             border-top: 1px solid #ddd;
             margin-top: 20px;
         }
+
         .content .quotation-details {
             background-color: #f9f9f9;
             padding: 20px;
@@ -61,16 +75,21 @@
             border: 1px solid #ddd;
             margin-bottom: 20px;
         }
+
         .content .quotation-details p {
             margin: 5px 0;
         }
+
         .highlight {
-            color: #d4af37; /* Gold */
+            color: #d4af37;
+            /* Gold */
         }
+
         .cta {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #555; /* Dark Grey */
+            background-color: #555;
+            /* Dark Grey */
             color: #fff;
             text-align: center;
             text-decoration: none;
@@ -80,6 +99,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -87,9 +107,10 @@
         </div>
         <div class="content">
             <p>Hello,</p>
-            
-            <p>We are pleased to inform you that a new quotation has been received. Below are the details of the quotation:</p>
-            
+
+            <p>We are pleased to inform you that a new quotation has been received. Below are the details of the
+                quotation:</p>
+
             <div class="quotation-details">
                 <p><strong>Quotation ID:</strong> {{ $quotation->id }}</p>
                 <p><strong>Vehicle ID:</strong> {{ $quotation->vehicle_id }}</p>
@@ -104,18 +125,21 @@
                 <p><strong>Customer Email:</strong> {{ $quotation->customer_email }}</p>
                 <p><strong>Customer Phone:</strong> {{ $quotation->customer_phone }}</p>
                 <p><strong>Payment Method:</strong> {{ $quotation->payment_method }}</p>
-                
+
                 <p><strong>Additional Services:</strong></p>
-                @foreach ($quotation->additional_services as $service)
-                <p>- {{ $service }}</p>
-                @endforeach
-                
+                @isset($quotation->additional_services)
+                    @foreach ($quotation->additional_services as $service)
+                        <p>- {{ $service }}</p>
+                    @endforeach
+                @endisset
+                <p><strong>Child Count:</strong> {{ $quotation->child_count }}</p>
+                <p><strong>Child Ages:</strong> {{ $quotation->child_ages }}</p>
                 <p><strong>Additional Information:</strong> {{ $quotation->additional_information }}</p>
                 <p><strong>Status:</strong> {{ $quotation->status }}</p>
             </div>
-            
+
             <p>Please review and take the necessary actions regarding this quotation.</p>
-            
+
             <p>Thank you.</p>
 
             {{-- <a href="[Your Action URL]" class="cta">View Quotation</a> --}}
@@ -125,4 +149,5 @@
         </div>
     </div>
 </body>
+
 </html>

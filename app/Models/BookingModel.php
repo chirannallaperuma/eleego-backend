@@ -25,6 +25,8 @@ class BookingModel extends Model
         'additional_information',
         'status',
         'total_amount',
+        'child_count',
+        'child_ages'
     ];
 
     protected $casts = [

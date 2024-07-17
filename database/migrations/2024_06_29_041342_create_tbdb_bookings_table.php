@@ -31,6 +31,8 @@ class CreateTbdbBookingsTable extends Migration
             $table->text('additional_information')->nullable();
             $table->string('status')->default('pending');
             $table->integer('total_amount')->nullable();
+            $table->integer('child_count')->nullable();
+            $table->string('child_ages')->nullable();
             $table->timestamps();
         });
     }

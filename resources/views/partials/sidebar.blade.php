@@ -110,12 +110,12 @@
                                     <p>Quotations</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="/vehicles" class="nav-link">
                                     <i class="fa fa-clipboard-list nav-icon"></i>
                                     <p>Rental</p>
                                 </a>
-                            </li>
+                            </li> --}}
                         </ul>
                     </li>
                 </ul>

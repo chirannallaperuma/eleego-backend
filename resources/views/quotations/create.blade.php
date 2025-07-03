@@ -60,7 +60,7 @@
                                             placeholder="Vehicle Type" required>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="number" step="0.01" name="rates_per_day[]" class="form-control"
+                                        <input type="number" min="0" step="0.01" name="rates_per_day[]" class="form-control"
                                             placeholder="Rate Per Day (CHF)" required>
                                     </div>
                                     <div class="col-md-1">
@@ -71,7 +71,7 @@
 
                             <div class="mb-3">
                                 <label>Total Amount (CHF)</label>
-                                <input type="number" name="total_amount" class="form-control" required>
+                                <input type="number" min="0" name="total_amount" class="form-control" required>
                             </div>
 
                             <div class="mb-3">

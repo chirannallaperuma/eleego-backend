@@ -98,6 +98,26 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview">
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                            <i class="nav-icon fas fa-calendar-alt"></i>
+                            <p>Reports<i class="right fas fa-angle-left"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/quotations/create" class="nav-link">
+                                    <i class="fa fa-file-alt nav-icon"></i>
+                                    <p>Quotations</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/vehicles" class="nav-link">
+                                    <i class="fa fa-clipboard-list nav-icon"></i>
+                                    <p>Rental</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>

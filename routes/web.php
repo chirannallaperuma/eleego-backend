@@ -38,4 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'store'])->name('vehicle-brand.store');
         Route::get('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'index'])->name('vehicle-brand.index');
     });
+
+    Route::get('/quotations/create', [\App\Http\Controllers\QuotationController::class, 'create'])->name('quotations.create');
+    Route::post('/quotations', [\App\Http\Controllers\QuotationController::class, 'store'])->name('quotations.store');
 });

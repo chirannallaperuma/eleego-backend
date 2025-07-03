@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiHelper;
 use App\Repositories\Contracts\VehicleBrandRepositoryInterface;
-use Exception;
 use Illuminate\Http\Request;
 
 class VehicleBrandController extends Controller

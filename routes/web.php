@@ -24,19 +24,26 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 // Admin routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/admin/dashboard', [\App\Http\Controllers\Backend\AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.dashboard');
 
     // vehicles routes
     Route::group(['prefix' => 'vehicles'], function () {
-        Route::get('/', [\App\Http\Controllers\Backend\VehicleController::class, 'index'])->name('vehicles.index');
-        Route::get('/add', [\App\Http\Controllers\Backend\VehicleController::class, 'create'])->name('vehicles.create');
-        Route::post('/store', [\App\Http\Controllers\Backend\VehicleController::class, 'store'])->name('vehicles.store');
-        Route::post('/update', [\App\Http\Controllers\Backend\VehicleController::class, 'update'])->name('vehicles.update');
+        Route::get('/', [\App\Http\Controllers\VehicleController::class, 'index'])->name('vehicles.index');
+        Route::get('/add', [\App\Http\Controllers\VehicleController::class, 'create'])->name('vehicles.create');
+        Route::post('/store', [\App\Http\Controllers\VehicleController::class, 'store'])->name('vehicles.store');
+        Route::post('/update', [\App\Http\Controllers\VehicleController::class, 'update'])->name('vehicles.update');
+        Route::post('/delete/{id}', [\App\Http\Controllers\VehicleController::class, 'delete'])->name('vehicles.delete');
     });
 
+    // vehicle brands routes
     Route::group(['prefix' => 'vehicle-brands'], function () {
-        Route::post('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'store'])->name('vehicle-brand.store');
-        Route::get('/', [\App\Http\Controllers\Backend\VehicleBrandController::class, 'index'])->name('vehicle-brand.index');
+        Route::post('/', [\App\Http\Controllers\VehicleBrandController::class, 'store'])->name('vehicle-brand.store');
+        Route::get('/', [\App\Http\Controllers\VehicleBrandController::class, 'index'])->name('vehicle-brand.index');
+    });
+
+    // bookings routes
+    Route::group(['prefix' => 'bookings'], function () {
+        Route::get('/{type}', [\App\Http\Controllers\BookingController::class, 'index'])->name('bookings.index');
     });
 
     Route::get('/quotations/create', [\App\Http\Controllers\QuotationController::class, 'create'])->name('quotations.create');

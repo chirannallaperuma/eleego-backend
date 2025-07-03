@@ -45,13 +45,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/user/new-user" class="nav-link">
+                                <a href="#" class="nav-link">
                                     <i class="fa fa-plus-circle nav-icon"></i>
                                     <p>New User</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/user/user-list" class="nav-link">
+                                <a href="#list" class="nav-link">
                                     <i class="fa fa-list nav-icon"></i>
                                     <p>User List</p>
                                 </a>
@@ -85,13 +85,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="/vehicles/add" class="nav-link">
+                                <a href="/bookings/limousine" class="nav-link">
                                     <i class="fa fa-file-alt nav-icon"></i>
                                     <p>Limousine</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/vehicles" class="nav-link">
+                                <a href="/bookings/rental" class="nav-link">
                                     <i class="fa fa-clipboard-list nav-icon"></i>
                                     <p>Rental</p>
                                 </a>

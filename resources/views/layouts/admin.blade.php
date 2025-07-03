@@ -27,6 +27,7 @@
     <script src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')
 
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 </body>
 
 </html>

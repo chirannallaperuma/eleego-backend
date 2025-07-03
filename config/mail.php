@@ -115,4 +115,5 @@ return [
         ],
     ],
 
+    'to' => env('MAIL_TO_ADDRESS', 'info@eleego.ch')
 ];

@@ -19,13 +19,19 @@ class CreateTbdbVehiclesTable extends Migration
             $table->string('name');
             $table->string('transmission');
             $table->string('fuel_type');
-            $table->integer('capacity');
+            $table->double('per_day_amount')->nullable();
             $table->integer('seats');
             $table->integer('doors');
-            $table->integer('luggages');
+            $table->integer('baggages');
             $table->string('availability');
             $table->string('category');
-            $table->string('image')->nullable();
+            $table->string('image_path')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('image_disk')->nullable();
+            $table->dateTime('last_booking_pickup_date')->nullable();
+            $table->dateTime('last_booking_drop_date')->nullable();
+            $table->text('description')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

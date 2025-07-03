@@ -41,7 +41,14 @@
                                 {{ session('alert') }}
                             </div>
                         @endif
-                        <table class="table table-borderless">
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                {{ session('error') }}
+                            </div>
+                        @endif
+                        <table class="table table-borderless table-responsive-lg">
                             <thead class="bg-gradient-navy">
                                 <tr>
                                     <th>ID</th>
@@ -49,6 +56,7 @@
                                     <th>Brand</th>
                                     <th>Vehicle Name</th>
                                     <th>Transmission</th>
+                                    <th>Category</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -57,8 +65,8 @@
                                     @foreach ($vehicles as $key => $vehicle)
                                         <tr>
                                             <td>{{ $vehicle->id }}</td>
-                                            @if ($vehicle->image != null)
-                                                <td><img src="/uploads/vehicles/{{ $vehicle->image }}" alt=""
+                                            @if ($vehicle->image_url != null)
+                                                <td><img src="{{ $vehicle->image_url }}" alt=""
                                                         class="img-thumbnail" width="45"></td>
                                             @elseif($vehicle->image == null)
                                                 <td><img src="/img/no_image.jpg" class="img-thumbnail" alt=""
@@ -67,6 +75,7 @@
                                             <td>{{ $vehicle->brand_name }}</td>
                                             <td>{{ $vehicle->name }}</td>
                                             <td>{{ $vehicle->transmission }}</td>
+                                            <td>{{ $vehicle->category }}</td>
                                             <td><button class="btn btn-warning btn-sm" data-toggle="modal"
                                                     data-target="#vehicleModal_{{ $key }}" data-whatever="@mdo"
                                                     id="view_{{ $key }}"><i class="fa fa-eye"></i></button>
@@ -179,20 +188,32 @@
                                                                             Electric
                                                                         </label>
                                                                     </div>
+                                                                    <div class="form-check">
+                                                                        <input
+                                                                            class="form-check-input @error('fuel_type') is-invalid @enderror"
+                                                                            type="radio" name="fuel_type"
+                                                                            id="hybrid" value="hybrid"
+                                                                            {{ $vehicle->fuel_type == 'hybrid' ? 'checked' : '' }}>
+                                                                        <label class="form-check-label" for="hybrid">
+                                                                            Hybrid
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
 
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <label for="capacity" class="col-form-label">Engine
-                                                                        Capacity (CC):</label>
+                                                                    <label for="per_day_amount" class="col-form-label">Per
+                                                                        Day Amount</label>
                                                                     <input type="text" class="form-control"
-                                                                        id="capacity" name="capacity"
-                                                                        value="{{ $vehicle->capacity }}">
+                                                                        id="per_day_amount" name="per_day_amount"
+                                                                        step="any" min="0"
+                                                                        value="{{ $vehicle->per_day_amount }}">
                                                                 </div>
 
                                                                 <div class="col-lg-6">
-                                                                    <label for="seats" class="col-form-label">No. of
+                                                                    <label for="seats" class="col-form-label">No.
+                                                                        of
                                                                         seats:</label>
                                                                     <input type="text" class="form-control"
                                                                         id="seats" name="seats"
@@ -202,7 +223,8 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <label for="doors" class="col-form-label">No. of
+                                                                    <label for="doors" class="col-form-label">No.
+                                                                        of
                                                                         Doors:</label>
                                                                     <input type="text" class="form-control"
                                                                         id="doors" name="doors"
@@ -210,11 +232,11 @@
                                                                 </div>
 
                                                                 <div class="col-lg-6">
-                                                                    <label for="luggages"
-                                                                        class="col-form-label">luggages:</label>
+                                                                    <label for="baggages"
+                                                                        class="col-form-label">baggages:</label>
                                                                     <input type="text" class="form-control"
-                                                                        id="luggages" name="luggages"
-                                                                        value="{{ $vehicle->luggages }}">
+                                                                        id="baggages" name="baggages"
+                                                                        value="{{ $vehicle->baggages }}">
                                                                 </div>
                                                             </div>
 
@@ -251,22 +273,32 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="form-group float-right" style="padding-top: 20px">
-                                                                @if ($vehicle->image != null)
-                                                                    <img id="vehicle_{{ $key }}"
-                                                                        class="img-thumbnail" width="200"
-                                                                        src="/uploads/vehicles/{{ $vehicle->image }}"
-                                                                        alt="vehicle" />
-                                                                @elseif($vehicle->image == null)
-                                                                    <img id="vehicle_{{ $key }}"
-                                                                        class="img-thumbnail" width="200"
-                                                                        src="{{ asset('img/no_image.jpg') }}"
-                                                                        alt="vehicle" />
-                                                                @endif
-                                                                <p>Choose image</p>
-                                                                <input type='file' name="image"
-                                                                    id="itempic_{{ $key }}"
-                                                                    onchange="imageUpload(this,'{{ $key }}')" />
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <label for="description"
+                                                                        class="col-form-label">Description:</label>
+                                                                    <textarea id="description" type="text" step="any" min="0" style="height: 200px"
+                                                                        class="form-control @error('description') is-invalid @enderror" name="description"
+                                                                        value="{{ old('description') }}">{{ $vehicle->description }}</textarea>
+                                                                </div>
+
+                                                                <div class="col-lg-6" style="padding-top: 30px">
+                                                                    @if ($vehicle->image_url != null)
+                                                                        <img id="vehicle_{{ $key }}"
+                                                                            class="img-thumbnail" width="200"
+                                                                            src="{{ $vehicle->image_url }}"
+                                                                            alt="vehicle" />
+                                                                    @elseif($vehicle->image_url == null)
+                                                                        <img id="vehicle_{{ $key }}"
+                                                                            class="img-thumbnail" width="200"
+                                                                            src="{{ asset('img/no_image.jpg') }}"
+                                                                            alt="vehicle" />
+                                                                    @endif
+                                                                    <p>Choose image</p>
+                                                                    <input type='file' name="image"
+                                                                        id="itempic_{{ $key }}"
+                                                                        onchange="imageUpload(this,'{{ $key }}')" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -284,6 +316,7 @@
                                     @endforeach
                                 @endif
                             </tbody>
+                            {{ $vehicles->links() }}
                         </table>
                     </div>
                 </div>
@@ -297,39 +330,37 @@
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
+                icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
-                if (result.value === true) {
-
+                if (result.isConfirmed) {
                     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
                     $.ajax({
                         type: 'POST',
-                        url: "{{ url('/product/product-delete') }}/" + id,
+                        url: "{{ route('vehicles.delete', ':id') }}".replace(':id', id),
                         data: {
                             _token: CSRF_TOKEN
                         },
-                        dataType: 'JSON',
+                        dataType: 'json',
                         success: function(results) {
-
-                            if (results.success === true) {
-                                swal("Done!", results.message, "success");
-                                location.reload();
+                            if (results.success) {
+                                Swal.fire("Done!", results.message, "success").then(() => {
+                                    location.reload();
+                                });
                             } else {
-                                swal("Error!", results.message, "error");
+                                Swal.fire("Error!", results.message, "error");
                             }
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire("Error!", "Something went wrong: " + error, "error");
                         }
                     });
-                } else {
-                    result.dismiss;
                 }
-
-            })
-
-
+            });
         }
 
         function imageUpload(input, index) {

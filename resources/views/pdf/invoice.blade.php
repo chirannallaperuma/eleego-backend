@@ -198,6 +198,16 @@
                         <td>{{ number_format($item['amount'], 2) }} CHF</td>
                     </tr>
                 @endforeach
+
+                @if (!empty($invoice->extras))
+                    @foreach ($invoice->extras as $extra)
+                        <tr>
+                            <td>{{ $extra['date'] ?? '' }}</td>
+                            <td>{{ $extra['description'] ?? '' }}</td>
+                            <td>{{ isset($extra['amount']) ? number_format($extra['amount'], 2) : '' }} CHF</td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
             <tfoot>
                 <tr>

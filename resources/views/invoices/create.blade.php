@@ -47,13 +47,13 @@
                 <h6 class="text-primary">Rental Items</h6>
                 <div id="items">
                     <div class="row mb-2 item-row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <input type="text" name="items[0][date]" class="form-control" placeholder="e.g. 02/02/2025-26/02/2025 or 30/03/2025-09:30PM" required>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input type="text" name="items[0][description]" class="form-control" placeholder="Description" required>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <input type="number" name="items[0][amount]" step="0.01" class="form-control" placeholder="Amount" required>
                         </div>
                         <div class="col-md-1">

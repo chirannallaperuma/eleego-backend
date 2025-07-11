@@ -21,5 +21,6 @@ class Quotation extends Model
         'cancel_before',
         'contact_person',
         'contact_number',
+        'terms_and_conditions'
     ];
 }

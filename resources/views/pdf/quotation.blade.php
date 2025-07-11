@@ -260,22 +260,21 @@
                     Total Amount for the Period: {{ number_format($quotation->total_amount, 2) }} CHF
                 </p>
 
+                @php
+                    use Illuminate\Support\Str;
+
+                    $terms = $quotation->terms_and_conditions ?? '';
+                    $lines = array_filter(array_map('trim', explode("\n", $terms)));
+
+                    // Always append contact line
+                    $lines[] = 'For further clarifications please contact: G. A. Ranasinghe: +41 78 239 68 50';
+                @endphp
+
                 <h3 style="margin-top: 30px;">Terms and conditions:</h3>
                 <ul>
-                    <li>Daily Kilometer Allowance: 150 km per day included totaling {{ $quotation->days * 150 }} km for
-                        the entire rental period.</li>
-                    <li>Tolls, parking fees, and driver meals are to be covered by the client or reimbursed upon
-                        presentation of receipts.</li>
-                    <li>A deposit of 30% is required to
-                        confirm the booking. The remaining balance should be settled no later than
-                        {{ \Carbon\Carbon::parse($quotation->start_date)->format('F jS, Y') }}. Complimentary
-                        cancellation is available until
-                        {{ \Carbon\Carbon::parse($quotation->cancel_before)->format('F jS, Y') }}.</li>
-                    <li>Any additional kilometers or hours beyond the agreed limit will be invoiced at the end of the
-                        assignment.</li>
-                    <li>For further clarifications please contact:<br>
-                        <strong>G. A. Ranasinghe:</strong> +41 78 239 68 50
-                    </li>
+                    @foreach ($lines as $line)
+                        <li>{{ $line }}</li>
+                    @endforeach
                 </ul>
             </div>
         </div>

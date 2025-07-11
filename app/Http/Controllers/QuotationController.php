@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Quotation;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -16,7 +17,9 @@ class QuotationController extends Controller
         $nextNumber = $lastQuotation ? intval(preg_replace('/[^0-9]/', '', $lastQuotation->quotation_no)) + 1 : 1;
         $quotationNo = str_pad($nextNumber, 4, '0', STR_PAD_LEFT); // e.g., Q-0001, Q-0002
 
-        return view('quotations.create', compact('quotationNo'));
+        $defaultTerms = Setting::where('key', 'default_terms_and_conditions')->value('value');
+
+        return view('quotations.create', compact('quotationNo', 'defaultTerms'));
     }
 
     public function store(Request $request)
@@ -54,6 +57,17 @@ class QuotationController extends Controller
             ];
         }
 
+        $defaultTerms = $data['terms_and_conditions'] ?? '';
+
+        $formattedSettleDate = Carbon::parse($data['settle_date'])->format('F jS, Y');
+        $formattedCancelDate = Carbon::parse($data['cancel_before'])->format('F jS, Y');
+
+        $finalTerms = str_replace(
+            ['{{settle_date}}', '{{cancel_before}}'],
+            [$formattedSettleDate, $formattedCancelDate],
+            $defaultTerms
+        );
+
         $quotation = Quotation::create([
             'quotation_no' => $data['quotation_no'],
             'quotation_date' => $data['quotation_date'],
@@ -71,6 +85,7 @@ class QuotationController extends Controller
             'cancel_before' => $data['cancel_before'],
             'contact_person' => $data['contact_person'],
             'contact_number' => $data['contact_number'],
+            'terms_and_conditions' => $finalTerms,
         ]);
 
         $pdf = Pdf::loadView('pdf.quotation', compact('quotation'));

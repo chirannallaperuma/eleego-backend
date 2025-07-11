@@ -60,8 +60,8 @@
                                             placeholder="Vehicle Type" required>
                                     </div>
                                     <div class="col-md-5">
-                                        <input type="number" min="0" step="0.01" name="rates_per_day[]" class="form-control"
-                                            placeholder="Rate Per Day (CHF)" required>
+                                        <input type="number" min="0" step="0.01" name="rates_per_day[]"
+                                            class="form-control" placeholder="Rate Per Day (CHF)" required>
                                     </div>
                                     <div class="col-md-1">
                                         <button type="button" class="btn btn-success add-row">+</button>
@@ -85,8 +85,18 @@
                             </div>
 
                             <div class="mb-3">
+                                <label>Settle Before Date</label>
+                                <input type="date" name="settle_date" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
                                 <label>Cancel Before Date</label>
                                 <input type="date" name="cancel_before" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label>Terms and Conditions</label>
+                                <textarea name="terms_and_conditions" class="form-control" rows="6">{{ old('terms_and_conditions', $defaultTerms) }}</textarea>
                             </div>
 
                             <button type="submit" class="btn btn-success">Generate PDF</button>

@@ -227,11 +227,6 @@
                 <li>BIC – POFICHBEXXX</li>
             </ul>
         </div>
-
-        <!-- PAGE 1 FOOTER (contact info) -->
-
-
-
     </main>
 
     <div class="page-break"></div>

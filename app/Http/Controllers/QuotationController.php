@@ -47,13 +47,12 @@ class QuotationController extends Controller
 
         foreach ($data['vehicle_types'] as $index => $type) {
             $rate = $data['rates_per_day'][$index];
-            $amount = $rate * $days;
-            $total_amount += $amount;
+            $date_range = $data['vehicle_dates'][$index];
 
             $vehicleDetails[] = [
                 'type' => $type,
                 'rate' => $rate,
-                'amount' => $amount,
+                'date' => $date_range,
             ];
         }
 
@@ -76,9 +75,7 @@ class QuotationController extends Controller
             'address' => $data['address'],
             'start_date' => $data['start_date'],
             'end_date' => $data['end_date'],
-            'vehicle_type' => json_encode(array_map(function ($type, $rate) {
-                return ['type' => $type, 'rate' => $rate];
-            }, $data['vehicle_types'], $data['rates_per_day'])),
+            'vehicle_type' => json_encode($vehicleDetails), 
             'rate_per_day' => null,
             'days' => Carbon::parse($data['start_date'])->diffInDays(Carbon::parse($data['end_date'])) + 1,
             'total_amount' => (float) $data['total_amount'],

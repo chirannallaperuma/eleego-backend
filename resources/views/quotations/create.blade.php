@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8 mt-3">
+            <div class="col-md-10 mt-3">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
@@ -56,10 +56,14 @@
                                 <label>Vehicle Type & Rate Per Day (CHF)</label>
                                 <div class="row mb-2 vehicle-row">
                                     <div class="col-md-6">
+                                        <input type="text" name="vehicle_dates[]" class="form-control"
+                                            placeholder="e.g. 02/02/2025-26/02/2025 (25 Days)" required>
+                                    </div>
+                                    <div class="col-md-3">
                                         <input type="text" name="vehicle_types[]" class="form-control"
                                             placeholder="Vehicle Type" required>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-2">
                                         <input type="number" min="0" step="0.01" name="rates_per_day[]"
                                             class="form-control" placeholder="Rate Per Day (CHF)" required>
                                     </div>

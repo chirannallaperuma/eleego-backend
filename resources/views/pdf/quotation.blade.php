@@ -4,7 +4,7 @@
 <head>
     <style>
         @page {
-            margin: 100px 0px 100px;
+            margin: 100px 0px 10px;
             /* removes left and right margins */
         }
 
@@ -15,7 +15,7 @@
 
         header {
             position: fixed;
-            top: -80px;
+            top: -30px;
             left: 0;
             right: 0;
             height: 80px;
@@ -24,6 +24,7 @@
 
         .top-border-wrapper {
             position: relative;
+            margin-top: -30px;
             width: 100%;
             height: 80px;
             text-align: center;
@@ -72,6 +73,7 @@
             display: inline-block;
             background: #fff;
             padding: 0 20px;
+            top: -30px;
         }
 
         .top-border-logo img {
@@ -189,6 +191,10 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
+
+        .footer-wrapper {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 
@@ -200,16 +206,14 @@
         $logoSrc = 'data:image/jpeg;base64,' . $logoData;
     @endphp
 
-    <header>
-        <div class="top-border-wrapper">
-            <div class="top-border-line">
-                <div class="middle-line"></div>
-            </div>
-            <div class="top-border-logo">
-                <img src="{{ $logoSrc }}" alt="Logo">
-            </div>
+    <div class="top-border-wrapper">
+        <div class="top-border-line">
+            <div class="middle-line"></div>
         </div>
-    </header>
+        <div class="top-border-logo">
+            <img src="{{ $logoSrc }}" alt="Logo">
+        </div>
+    </div>
 
     <main>
         <div class="quotation-box-wrapper">
@@ -234,9 +238,9 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th>Date / Period</th>
                             <th>Type of the vehicle</th>
-                            <th>Amount per day</th>
+                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -245,10 +249,7 @@
                         @endphp
                         @foreach ($vehicles as $vehicle)
                             <tr>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($quotation->start_date)->format('d M Y') }} -
-                                    {{ \Carbon\Carbon::parse($quotation->end_date)->format('d M Y') }}
-                                </td>
+                                <td>{{ $vehicle['date'] ?? '-' }}</td>
                                 <td>{{ $vehicle['type'] }}</td>
                                 <td>{{ number_format($vehicle['rate'], 2) }} CHF</td>
                             </tr>
@@ -281,18 +282,21 @@
     </main>
 
     <footer>
-        <table class="footer-pattern-table" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-                <td class="line-pattern"></td>
-                <td class="center-block"></td>
-                <td class="line-pattern"></td>
-            </tr>
-        </table>
+        <div class="footer-wrapper">
+            <table class="footer-pattern-table" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="line-pattern"></td>
+                    <td class="center-block"></td>
+                    <td class="line-pattern"></td>
+                </tr>
+            </table>
 
-        <div class="footer-text">
-            Tel: +41 78 239 68 50 | Email: info@eleego.ch | Website: www.eleego.ch
+            <div class="footer-text">
+                Tel: +41 78 239 68 50 | Email: info@eleego.ch | Website: www.eleego.ch
+            </div>
         </div>
     </footer>
+
 
 
 </body>

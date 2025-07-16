@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <style>
         @page {
-            margin: 140px 40px 150px;
+            margin: 20px 40px 20px;
         }
 
         body {
@@ -15,8 +15,7 @@
         }
 
         header {
-            position: fixed;
-            top: -120px;
+            top: 0;
             left: 0;
             right: 0;
             height: 100px;
@@ -204,7 +203,8 @@
                         <tr>
                             <td>{{ $extra['date'] ?? '' }}</td>
                             <td>{{ $extra['description'] ?? '' }}</td>
-                            <td>{{ isset($extra['amount']) ? number_format($extra['amount'], 2) : '' }} CHF</td>
+                            <td>{{ isset($extra['amount']) ? number_format($extra['amount'], 2) . ' ' . 'CHF' : '' }}
+                            </td>
                         </tr>
                     @endforeach
                 @endif
@@ -229,59 +229,59 @@
         </div>
 
         <!-- PAGE 1 FOOTER (contact info) -->
-        <div style="position: absolute; bottom: -120px; left: 0; right: 0; font-size: 11px; padding-top: 10px;">
-            <table style="width: 100%; table-layout: fixed;">
-                <tr>
-                    <!-- Email (left) -->
-                    <td style="text-align: left; font-size: 15px; width: 33%;">
-                        <table>
-                            <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="{{ public_path('dist/img/email_icon.jpg') }}" style="height: 35px;">
-                                </td>
-                                <td style="vertical-align: middle; padding-left: 5px; padding-bottom: 6px;">
-                                    info@eleego.ch
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
 
-                    <!-- Web (center) -->
-                    <td style="text-align: center; font-size: 15px; width: 33%;">
-                        <table style="margin: 0 auto;">
-                            <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="{{ public_path('dist/img/web_icon.jpg') }}" style="height: 35px;">
-                                </td>
-                                <td style="vertical-align: middle; padding-left: 6px;">
-                                    eleego.ch
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-
-                    <!-- Phone (right) -->
-                    <td style="text-align: right; font-size: 15px; width: 33%;">
-                        <table style="float: right;">
-                            <tr>
-                                <td style="vertical-align: middle;">
-                                    <img src="{{ public_path('dist/img/phone_icon.jpg') }}" style="height: 35px;">
-                                </td>
-                                <td style="vertical-align: middle; padding-left: 6px;">
-                                    +41 78 239 68 50
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
 
 
     </main>
 
     <div class="page-break"></div>
+    <footer style="position: fixed; bottom: 30px; left: 40px; right: 40px; font-size: 12px;">
+        <table style="width: 100%; table-layout: fixed;">
+            <tr>
+                <!-- Email (left) -->
+                <td style="text-align: left; font-size: 15px; width: 33%;">
+                    <table>
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img src="{{ public_path('dist/img/email_icon.jpg') }}" style="height: 35px;">
+                            </td>
+                            <td style="vertical-align: middle; padding-left: 5px; padding-bottom: 6px;">
+                                info@eleego.ch
+                            </td>
+                        </tr>
+                    </table>
+                </td>
 
+                <!-- Web (center) -->
+                <td style="text-align: center; font-size: 15px; width: 33%;">
+                    <table style="margin: 0 auto;">
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img src="{{ public_path('dist/img/web_icon.jpg') }}" style="height: 35px;">
+                            </td>
+                            <td style="vertical-align: middle; padding-left: 6px;">
+                                eleego.ch
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <!-- Phone (right) -->
+                <td style="text-align: right; font-size: 15px; width: 33%;">
+                    <table style="float: right;">
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img src="{{ public_path('dist/img/phone_icon.jpg') }}" style="height: 35px;">
+                            </td>
+                            <td style="vertical-align: middle; padding-left: 6px;">
+                                +41 78 239 68 50
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </footer>
 </body>
 
 </html>
